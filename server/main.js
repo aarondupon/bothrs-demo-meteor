@@ -3,7 +3,7 @@ import {Shop} from '/imports/api/shop';
 import meteorAPI from '/imports/api/airtable/meteorAPI';
 
 function insertShop(data) {
-  Shop.insert({ ...data.fields, createdAt: new Date() });
+  // Shop.insert({ ...data.fields, createdAt: new Date() });
 }
 
 Meteor.startup(() => {  
@@ -14,4 +14,5 @@ Meteor.startup(() => {
   //     insertShop(element)
   //   }); 
   // })
+  
 });

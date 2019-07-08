@@ -7,12 +7,13 @@ function insertShop(data) {
 }
 
 Meteor.startup(() => {  
-  Shop.remove({})
-  meteorAPI.get(({data})=>{
-    const {records} = data;
-    records.forEach(element => {
-      insertShop(element)
-    }); 
-  })
+  /** local testing */
+  // Shop.remove({})
+  // meteorAPI.get(({data})=>{
+  //   const {records} = data;
+  //   records.forEach(element => {
+  //     insertShop(element)
+  //   }); 
+  // })
   
 });

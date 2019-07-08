@@ -4,7 +4,7 @@ import Card from "./components/Card";
 import Hero from "./components/Hero/Hero";
 import { ThemeProvider } from "styled-components";
 import styled from 'styled-components';
-import useAirtable from "../api/hooks/useAirtable";
+// import useAirtable from "../api/hooks/useAirtable";
 import useMeteorShopTracker from "../api/hooks/useMeteorShopTracker";
 
 const theme = {
@@ -42,7 +42,6 @@ const App = () => {
   // use restAPI
   // const [listData] = useAirtable(); 
    // use meteor
-   
   const [listData] = useMeteorShopTracker();
 
   return (

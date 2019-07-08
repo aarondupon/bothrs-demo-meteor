@@ -8,8 +8,9 @@ import HeroPager from "./components/HeroPager";
 import HeroPage from "./components/HeroPage";
 import ThunderShadowSVG from "../../core/symbols/ThunderShadowSVG";
 import useTimer from "./hooks/useTImer";
+import { useRenderContext } from "../../../context/renderContext";
 // import pages from "./data.json";
-import useMeteorHeroTracker from "../../../api/hooks/useMeteorHeroTracker";
+// import useMeteorHeroTracker from "../../../api/hooks/useMeteorHeroTracker";
 
 const Container = styled.div`
   position: relative;
@@ -43,21 +44,13 @@ const Box = styled.div`
   /* overflow: hidden; */
 `;
 
-const Hero = ({ children, source, title, text, label }) => {
-  const [pages] =  useMeteorHeroTracker();
+const Hero = ({ pages=[] }) => {
+  const {isClient} = useRenderContext();
+
+  /* const [pages] =  useMeteorHeroTracker(); */
   const [currentPage, setPage] = useState(0);
   const [stop, start, count] = useTimer(3000);
   const [down, setDown] = useState(false);
-
-  const transitions = useTransition(
-    pages[currentPage],
-    page => (page ? page.id : 0),
-    {
-      from: { opacity: 0, transform: "translate3d(100vw, 0, 0)" },
-      enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-      leave: { opacity: 0, transform: "translate3d(-20vw, 0, 0)" }
-    }
-  );
 
   const goToNextPage = () => setPage((currentPage + 1) % pages.length);
   /* const goToNextPage = () => setPage((currentPage + 1)); */
@@ -65,7 +58,7 @@ const Hero = ({ children, source, title, text, label }) => {
     setPage((pages.length + currentPage - 1) % pages.length);
 
   useEffect(() => {
-    pages.length > 1 && goToNextPage();
+    (pages.length > 1 ) && goToNextPage();
   }, [count]);
 
   const thunderAnimation = useSpring({
@@ -97,7 +90,7 @@ const Hero = ({ children, source, title, text, label }) => {
       </div>
 
       <Box onMouseEnter={stop} onMouseLeave={start} width={"50%"}>
-          <HeroPage page={pages[currentPage]} width={`${100}%`} height={180} />
+          <HeroPage animate={isClient} page={pages[currentPage]} width={`${100}%`} height={180} />
       </Box>
       <ArrowLeftBtn
         onMouseEnter={stop}
@@ -119,4 +112,4 @@ const Hero = ({ children, source, title, text, label }) => {
     </Container>
   );
 };
-export default Hero;
+export default React.memo(Hero);

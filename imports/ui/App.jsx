@@ -5,9 +5,10 @@ import Hero from "./components/Hero/Hero";
 import { ThemeProvider } from "styled-components";
 import styled from 'styled-components';
 require('./stylesheets/App.css');
-
 // import useAirtable from "../api/hooks/useAirtable";
 import useMeteorShopTracker from "../api/hooks/useMeteorShopTracker";
+import useMeteorHeroTracker from "../api/hooks/useMeteorHeroTracker";
+import { RenderContextProvider } from "../context/renderContext";
 
 const theme = {
   color: "#0C2358",
@@ -45,13 +46,16 @@ const App = () => {
   // const [listData] = useAirtable(); 
    // use meteor
   const [listData] = useMeteorShopTracker();
+  const [heroData] = useMeteorHeroTracker();
 
   return (
     <ThemeProvider theme={theme}>
+      <RenderContextProvider value={{isClient:Meteor.isClient}}>
       <AppContainer  >
-        <Hero />
+        <Hero pages={heroData}  />
         {Object.keys(listData).map(key=>createList(key,listData[key]))}
       </AppContainer>
+      </RenderContextProvider>
     </ThemeProvider>
   );
 };

@@ -7,7 +7,7 @@ function insertShop(data) {
 }
 
 Meteor.startup(() => {  
-  /** local testing */
+  /** local testing inject from airtable */
   // Shop.remove({})
   // meteorAPI.get(({data})=>{
   //   const {records} = data;

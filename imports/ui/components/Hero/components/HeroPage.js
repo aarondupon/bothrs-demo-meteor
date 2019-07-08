@@ -39,7 +39,8 @@ const StyledH1 = styled(H1)`
 
 const HeroPage = ({ page = {id:0}, width, height ,animate=true }) => {
   const transitions = useTransition(page, page => page.id, {
-    from:  animate  ? { opacity: 0, transform: `translate3d(100vw, 0, 0)` } : {},
+    // from:  animate  ? { opacity: 0, transform: `translate3d(100vw, 0, 0)` } : {},
+    from:  { opacity: 0, transform: `translate3d(100vw, 0, 0)` },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     leave: { opacity: 0, transform: "translate3d(-20vw, 0, 0)" }
   });
@@ -50,7 +51,7 @@ const HeroPage = ({ page = {id:0}, width, height ,animate=true }) => {
   });
   return (
     <div>
-      {transitions.map(({ item, props, key }) => (
+      {page.title && transitions.map(({ item, props, key }) => (
         <animated.div key={key} style={props}>
           <VBox width={width} height={height}>
             <StyledH1>{item.title}</StyledH1>
@@ -63,4 +64,4 @@ const HeroPage = ({ page = {id:0}, width, height ,animate=true }) => {
   );
 };
 
-export default React.memo(HeroPage);
+export default HeroPage;//React.memo(HeroPage,areEqual);

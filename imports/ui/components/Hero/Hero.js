@@ -9,8 +9,6 @@ import HeroPage from "./components/HeroPage";
 import ThunderShadowSVG from "../../core/symbols/ThunderShadowSVG";
 import useTimer from "./hooks/useTImer";
 import { useRenderContext } from "../../../context/renderContext";
-// import pages from "./data.json";
-// import useMeteorHeroTracker from "../../../api/hooks/useMeteorHeroTracker";
 
 const Container = styled.div`
   position: relative;
@@ -21,7 +19,7 @@ const Container = styled.div`
   margin-top: 30px;
   border-radius: ${40 / 2}px;
   padding: 0px 0px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25); // not okay :(
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
 `;
 
 const ArrowLeftBtn = styled(ArrowLeftSVG)`
@@ -41,7 +39,6 @@ const Box = styled.div`
   right: 12%;
   width: ${props => props.width};
   height: 300px;
-  /* overflow: hidden; */
 `;
 
 const Hero = ({ pages=[] }) => {
@@ -53,7 +50,6 @@ const Hero = ({ pages=[] }) => {
   const [down, setDown] = useState(false);
 
   const goToNextPage = () => setPage((currentPage + 1) % pages.length);
-  /* const goToNextPage = () => setPage((currentPage + 1)); */
   const goToPrevPage = () =>
     setPage((pages.length + currentPage - 1) % pages.length);
 
@@ -90,7 +86,7 @@ const Hero = ({ pages=[] }) => {
       </div>
 
       <Box onMouseEnter={stop} onMouseLeave={start} width={"50%"}>
-          <HeroPage animate={isClient} page={pages[currentPage]} width={`${100}%`} height={180} />
+          <HeroPage  animate={isClient} page={pages[currentPage]} width={`${100}%`} height={180} />
       </Box>
       <ArrowLeftBtn
         onMouseEnter={stop}
@@ -112,4 +108,16 @@ const Hero = ({ pages=[] }) => {
     </Container>
   );
 };
-export default React.memo(Hero);
+
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+  return prevProps.pages.length == nextProps.pages.length;
+ /* const {page:prevPage = {id:0}} = prevProps;
+ const {page:nextPage = {id:0}} = nextProps
+ return prevPage.title == nextPage.title */
+}
+export default React.memo(Hero,areEqual);

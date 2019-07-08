@@ -1,6 +1,6 @@
 import { onPageLoad } from "meteor/server-render";
 import React from "react";
-import { renderToNodeStream } from "react-dom/server";
+import { renderToNodeStream , renderToString} from "react-dom/server";
 import List from "../../ui/components/List";
 import Card from "../../ui/components/Card";
 import { default as HeroBox } from "../../ui/components/Hero/Hero";
@@ -12,7 +12,6 @@ import * as R from "ramda";
 import { ServerStyleSheet } from "styled-components";
 import { RenderContextProvider } from "../../context/renderContext";
 
-// import x from '../../ui/stylesheets/App.css';
 const theme = {
   color: "#0C2358",
   secondColor: "#5BC9BF",
@@ -66,6 +65,7 @@ onPageLoad(sink => {
   const sheet = new ServerStyleSheet();
   const appJSX = sheet.collectStyles(<App location={sink.request.url} />);
   const htmlStream = sheet.interleaveWithNodeStream(renderToNodeStream(appJSX));
+//   const htmlStream = renderToString(appJSX)
   sink.renderIntoElementById("react-target", htmlStream);
 
 

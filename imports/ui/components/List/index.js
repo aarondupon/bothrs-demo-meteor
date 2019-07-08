@@ -5,8 +5,10 @@ import LinkBtn from '../Button/LinkBtn';
 
 const Flex = styled.div `
     display:flex;
-    flex-direction:row;
-    width:${props => props.width || '100%'};
+    flex-wrap: wrap;
+    /* border:solid; */
+    /* flex-direction:row; */
+    width:${props => props.width || '103%'};
     margin-bottom:64px;
     /* height:${props => props.height || '403px'}; */
     /* border:solid 1px red; */

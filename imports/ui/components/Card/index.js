@@ -15,16 +15,17 @@ const Container = styled.div`
   height: ${props => props.height || 'auto'};
   background-color: "#f0f0f0";
   /* border: solid 1px green; */
-  margin-left: 60px;
-  &:first-child{
+  /* flex-basis: 30%; */
+  flex-direction:column;
+  flex: 0 0 30%;
+  margin-right: 3.3333%;
+  /* &:first-child{
     margin-left: 0px;
-  }
+  } */
   margin-top: 30px;
   padding-bottom:20px;
   border-radius: 10.0161px;
   overflow:hidden;
-  /* display:flex; */
-  flex-direction:column;
   background:#ffffff;
   box-shadow: 0px 10.0161px 40.0645px rgba(0, 0, 0, 0.05), 0px 0px 40.0645px rgba(91, 201, 191, 0.1);
   transform: translateY(0px) scale(1) translateZ(0);

@@ -40,9 +40,9 @@ const AppContainer = styled.div`
 `
 const App = () => {
   // use restAPI
-  /* const [listData] = useAirtable(); */
+  const [listData] = useAirtable(); 
    // use meteor
-  const [listData] = useMeteorTracker();
+  // const [listData] = useMeteorTracker();
 
   return (
     <ThemeProvider theme={theme}>

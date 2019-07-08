@@ -3,7 +3,7 @@ import {useTracker} from 'react-meteor-hooks';
 import {Shop} from '/imports/api/shop';
 const group =  R.groupBy(R.prop('Categorie'));
 
-const useMeteorTracker = () => {
+const useMeteorShopTracker = () => {
 
   const { shop } = useTracker(
     () => ({
@@ -14,4 +14,4 @@ const useMeteorTracker = () => {
   const data = group(shop);
   return [data];
 };
-export default useMeteorTracker;
+export default useMeteorShopTracker;

@@ -5,7 +5,7 @@ import Hero from "./components/Hero/Hero";
 import { ThemeProvider } from "styled-components";
 import styled from 'styled-components';
 import useAirtable from "../api/hooks/useAirtable";
-import useMeteorTracker from "../api/hooks/useMeteorTracker";
+import useMeteorShopTracker from "../api/hooks/useMeteorShopTracker";
 
 const theme = {
   color: "#0C2358",
@@ -42,7 +42,7 @@ const App = () => {
   // use restAPI
   // const [listData] = useAirtable(); 
    // use meteor
-  const [listData] = useMeteorTracker();
+  const [listData] = useMeteorShopTracker();
 
   return (
     <ThemeProvider theme={theme}>

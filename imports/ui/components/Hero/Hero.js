@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useTransition, animated, useSpring } from "react-spring";
 import ThunderSVG from "../../core/symbols/ThunderSVG";
@@ -8,7 +8,8 @@ import HeroPager from "./components/HeroPager";
 import HeroPage from "./components/HeroPage";
 import ThunderShadowSVG from "../../core/symbols/ThunderShadowSVG";
 import useTimer from "./hooks/useTImer";
-import pages from "./data.json";
+// import pages from "./data.json";
+import useMeteorHeroTracker from "../../../api/hooks/useMeteorHeroTracker";
 
 const Container = styled.div`
   position: relative;
@@ -43,14 +44,20 @@ const Box = styled.div`
 `;
 
 const Hero = ({ children, source, title, text, label }) => {
+  const [pages] =  useMeteorHeroTracker();
   const [currentPage, setPage] = useState(0);
   const [stop, start, count] = useTimer(3000);
   const [down, setDown] = useState(false);
-  const transitions = useTransition(pages[currentPage], page => page.id, {
-    from: { opacity: 0, transform: "translate3d(100vw, 0, 0)" },
-    enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(-20vw, 0, 0)" }
-  });
+
+  const transitions = useTransition(
+    pages[currentPage],
+    page => (page ? page.id : 0),
+    {
+      from: { opacity: 0, transform: "translate3d(100vw, 0, 0)" },
+      enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+      leave: { opacity: 0, transform: "translate3d(-20vw, 0, 0)" }
+    }
+  );
 
   const goToNextPage = () => setPage((currentPage + 1) % pages.length);
   /* const goToNextPage = () => setPage((currentPage + 1)); */
@@ -58,18 +65,19 @@ const Hero = ({ children, source, title, text, label }) => {
     setPage((pages.length + currentPage - 1) % pages.length);
 
   useEffect(() => {
-    goToNextPage();
+    pages.length > 1 && goToNextPage();
   }, [count]);
 
   const thunderAnimation = useSpring({
     transform: down ? "translateY(-20px)" : "translateY(0px)"
   });
   const shadowAnimation = useSpring({
-    transform: down ? "translateY(-30px) scale(1.2)" : "translateY(0px) scale(1)",
-    opacity: down ?  .5 : 1,
+    transform: down
+      ? "translateY(-30px) scale(1.2)"
+      : "translateY(0px) scale(1)",
+    opacity: down ? 0.5 : 1
   });
 
-  console.log("down:::", thunderAnimation);
 
   return (
     <Container
@@ -89,7 +97,7 @@ const Hero = ({ children, source, title, text, label }) => {
       </div>
 
       <Box onMouseEnter={stop} onMouseLeave={start} width={"50%"}>
-        <HeroPage page={pages[currentPage]} width={`${100}%`} height={180} />
+          <HeroPage page={pages[currentPage]} width={`${100}%`} height={180} />
       </Box>
       <ArrowLeftBtn
         onMouseEnter={stop}

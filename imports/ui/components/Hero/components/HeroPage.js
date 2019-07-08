@@ -34,7 +34,7 @@ const StyledH1 = styled(H1)`
   }
 `;
 
-const HeroPage = ({ page, width, height }) => {
+const HeroPage = ({ page = {id:0}, width, height }) => {
   const transitions = useTransition(page, page => page.id, {
     from: { opacity: 0, transform: "translate3d(100vw, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },

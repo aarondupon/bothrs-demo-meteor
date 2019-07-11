@@ -43,7 +43,6 @@ const Box = styled.div`
 
 const Hero = ({ pages=[] }) => {
   const {isClient} = useRenderContext();
-  console.log(pages)
   /* const [pages] =  useMeteorHeroTracker(); */
   const [currentPage, setPage] = useState(0);
   const [stop, start, count] = useTimer(3000);

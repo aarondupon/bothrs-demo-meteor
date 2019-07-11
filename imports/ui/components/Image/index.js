@@ -17,6 +17,7 @@ const Image  = styled(LazyLoadImage)`
 export default ((props)=>
     <Image  {...props}
         width={'100%'}
+        height={props.width*RATIO}
         // visibleByDefault={!Meteor.isClient} 
         // visibleByDefault={true}
         src={props.source} 

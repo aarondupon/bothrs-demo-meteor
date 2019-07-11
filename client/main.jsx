@@ -7,11 +7,24 @@ import useMeteorHeroTracker from "../imports/api/hooks/useMeteorHeroTracker";
 
 Meteor.startup(() => {
     const Root = () => {
-        // const [shopList] = useMeteorShopTracker();
-        // const [heroList] = useMeteorHeroTracker();
+      let [s] = useMeteorShopTracker();
+      let [h] = useMeteorHeroTracker();
 
-        const [shopList,heroList] = window.__DATA;
-        return (<App shopList={shopList} heroList={heroList}/>);
+      if(window.__DATA){
+        shopList = window.__DATA.shopList;
+        heroList = window.__DATA.heroList;
+      }else{
+        shopList = s;
+        heroList = h;
+      }
+     
+
+      
+        
+        return (<App 
+            shopList={shopList}
+            heroList={heroList}
+            />);
     };
     hydrate(<Root/>, document.getElementById("react-target"));
 });

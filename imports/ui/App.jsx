@@ -38,7 +38,7 @@ const AppContainer = styled.div`
   transform: translate(-50%, 0);
 `;
 const App = ({ shopList, heroList }) => {
-
+  
   return (
     <ThemeProvider theme={theme}>
       <RenderContextProvider

@@ -11,16 +11,13 @@ Meteor.startup(() => {
       let [h] = useMeteorHeroTracker();
 
       if(window.__DATA){
-        shopList = window.__DATA.shopList;
-        heroList = window.__DATA.heroList;
+        shopList = window.__DATA[0];
+        heroList = window.__DATA[1];
       }else{
         shopList = s;
         heroList = h;
       }
      
-
-      
-        
         return (<App 
             shopList={shopList}
             heroList={heroList}

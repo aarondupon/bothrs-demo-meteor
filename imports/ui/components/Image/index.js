@@ -9,7 +9,7 @@ const Image  = styled(LazyLoadImage)`
     min-width:100%;
     /* width:100%; */
     width:${props=>props.width}px;
-    height:${props=>props.width*RATIO}px;
+    min-height:${props=>props.width*RATIO}px;
     background-size:cover;
     background-position: center center;
     background-color: lightgray;    

@@ -53,11 +53,11 @@ onPageLoad(sink => {
   const shopList = group(Shop.find({}).fetch());
   const heroList = Hero.find().fetch(); 
   
-  sink.appendToBody(`
-    <script>
-    __DATA=JSON.parse(decodeURIComponent("${encodeURIComponent(JSON.stringify([shopList,heroList]))}"))
-    </script>
-  `)
+  // sink.appendToBody(`
+  //   <script>
+  //   __DATA=JSON.parse(decodeURIComponent("${encodeURIComponent(JSON.stringify([shopList,heroList]))}"))
+  //   </script>
+  // `)
 
   sink.appendToBody(`
     <style>

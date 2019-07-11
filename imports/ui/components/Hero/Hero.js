@@ -43,7 +43,7 @@ const Box = styled.div`
 
 const Hero = ({ pages=[] }) => {
   const {isClient} = useRenderContext();
-
+  console.log(pages)
   /* const [pages] =  useMeteorHeroTracker(); */
   const [currentPage, setPage] = useState(0);
   const [stop, start, count] = useTimer(3000);
@@ -120,4 +120,5 @@ function areEqual(prevProps, nextProps) {
  const {page:nextPage = {id:0}} = nextProps
  return prevPage.title == nextPage.title */
 }
-export default React.memo(Hero,areEqual);
+// export default React.memo(Hero,areEqual);
+export default Hero

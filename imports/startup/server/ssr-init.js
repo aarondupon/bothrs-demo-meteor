@@ -6,11 +6,14 @@ import Card from "../../ui/components/Card";
 import { default as HeroBox } from "../../ui/components/Hero/Hero";
 import { ThemeProvider } from "styled-components";
 import styled from "styled-components";
-import { Shop } from "../..//api/shop";
-import { Hero } from "../..//api/hero";
+import { Shop } from "../../api/shop";
+import { Hero } from "../../api/hero";
 import * as R from "ramda";
 import { ServerStyleSheet } from "styled-components";
 import { RenderContextProvider } from "../../context/renderContext";
+import App from '../../ui/App';
+
+
 
 const theme = {
   color: "#0C2358",
@@ -47,27 +50,14 @@ const AppContainer = styled.div`
 const group = R.groupBy(R.prop("Categorie"));
 onPageLoad(sink => {
  
-  const listData = group(Shop.find({}).fetch());
-  const heroData = Hero.find().fetch(); 
-  const App = props => {
-    return (
-      <ThemeProvider theme={theme}>
-          <RenderContextProvider value={{isClient:Meteor.isClient}}>
-            <AppContainer>
-            <HeroBox pages={heroData}  />
-            {Object.keys(listData).map(key => createList(key, listData[key]))}
-            </AppContainer>
-        </RenderContextProvider>
-      </ThemeProvider>
-    );
-  };
-
-  const sheet = new ServerStyleSheet();
-  const appJSX = sheet.collectStyles(<App location={sink.request.url} />);
-  const htmlStream = sheet.interleaveWithNodeStream(renderToNodeStream(appJSX));
-//   const htmlStream = renderToString(appJSX)
-  sink.renderIntoElementById("react-target", htmlStream);
-
+  const shopList = group(Shop.find({}).fetch());
+  const heroList = Hero.find().fetch(); 
+  
+  sink.appendToBody(`
+    <script>
+    __DATA=JSON.parse(decodeURIComponent("${encodeURIComponent(JSON.stringify([shopList,heroList]))}"))
+    </script>
+  `)
 
   sink.appendToBody(`
     <style>
@@ -142,4 +132,15 @@ onPageLoad(sink => {
   
     </style>
   `);
+
+  const Root = () => {
+
+
+    return (<App shopList={shopList} heroList={heroList}/>);
+};
+  const sheet = new ServerStyleSheet();
+  const appJSX = sheet.collectStyles(<Root />);
+  const htmlStream = sheet.interleaveWithNodeStream(renderToNodeStream(appJSX));
+  // const htmlStream = renderToString(appJSX)
+  sink.renderIntoElementById("react-target", htmlStream);
 });

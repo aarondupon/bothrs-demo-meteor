@@ -9,9 +9,11 @@ import HeroPage from "./components/HeroPage";
 import ThunderShadowSVG from "../../core/symbols/ThunderShadowSVG";
 import useTimer from "./hooks/useTImer";
 import { useRenderContext } from "../../../context/renderContext";
+import useKeyPress from "./hooks/useKeyPress";
 
 const Container = styled.div`
   position: relative;
+  overflow:hidden;
   width: ${props => props.width || "100%"};
   height: ${props => props.height || "436px"};
   margin-bottom: 55px;
@@ -52,9 +54,24 @@ const Hero = ({ pages=[] }) => {
   const goToPrevPage = () =>
     setPage((pages.length + currentPage - 1) % pages.length);
 
+
+  const prev = useKeyPress('ArrowLeft');
+  const next = useKeyPress('ArrowRight');
+
+
   useEffect(() => {
-    (pages.length > 1 ) && goToNextPage();
-  }, [count]);
+    stop()
+    next &&  goToNextPage();
+    prev && goToPrevPage();
+    if(!next && !prev ){
+      (pages.length > 1 ) && goToNextPage();
+    }
+    start()
+  
+  }, [count,next,prev]);
+
+
+
 
   const thunderAnimation = useSpring({
     transform: down ? "translateY(-20px)" : "translateY(0px)"

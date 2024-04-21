@@ -1,2 +1,2 @@
-# bothrs demo meteor
+# bothrs demo meteor (react)
 
